@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace tests\Meals;
 
+use Meals\Domain\Dish\Dish;
 use Meals\Domain\Dish\DishList;
 use Meals\Domain\Employee\Employee;
 use Meals\Domain\Menu\Menu;
@@ -55,5 +56,28 @@ abstract class AbstractTestCase extends TestCase
     protected function getPollList(): PollList
     {
         return new PollList([$this->getPoll()]);
+    }
+
+    protected function getDish(string $title = 'title', string $description = 'description'): Dish
+    {
+        return new Dish(
+            rand(),
+            $title,
+            $description
+        );
+    }
+
+    protected function getDishList(): DishList
+    {
+        return new DishList([$this->getDish()]);
+    }
+
+    protected function getMenu(string $title = 'title'): Menu
+    {
+        return new Menu(
+            rand(),
+            $title,
+            $this->getDishList()
+        );
     }
 }

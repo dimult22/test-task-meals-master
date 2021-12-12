@@ -13,8 +13,7 @@ class PollResult
         private int $id,
         private Poll $poll,
         private Employee $employee,
-        private Dish $dish,
-        private int $employeeFloor
+        private Dish $dish
     ) {}
 
     public function getId(): int
@@ -39,6 +38,6 @@ class PollResult
 
     public function getEmployeeFloor(): int
     {
-        return $this->employeeFloor;
+        return $this->getEmployee()->getFloor();
     }
 }

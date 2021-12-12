@@ -1,0 +1,105 @@
+<?php
+
+declare(strict_types=1);
+
+namespace tests\Meals;
+
+use Meals\Domain\Dish\Dish;
+use Meals\Domain\Dish\DishList;
+use Meals\Domain\Employee\Employee;
+use Meals\Domain\Menu\Menu;
+use Meals\Domain\Poll\Poll;
+use Meals\Domain\Poll\PollList;
+use Meals\Domain\Poll\PollResult;
+use Meals\Domain\User\Permission\Permission;
+use Meals\Domain\User\Permission\PermissionList;
+use Meals\Domain\User\User;
+use PHPUnit\Framework\TestCase;
+
+abstract class AbstractTestCase extends TestCase
+{
+    protected const DATE_TIME_FORMAT = 'j-M-Y H:i:s';
+    protected const POLL_RESULT_VALID_DATE = '13-Dec-2021 12:00:00';
+    protected const POLL_RESULT_INVALID_DATE = '15-Dec-2021 12:00:00';
+
+    protected function getEmployee(int $floor = 1, array $userPermissions = []): Employee
+    {
+        return new Employee(
+            rand(),
+            $this->getUser($userPermissions),
+            $floor,
+            'Surname'
+        );
+    }
+
+    protected function getUser(array $userPermissions = []): User
+    {
+        $permissions = [];
+        foreach ($userPermissions as $userPermission) {
+            $permissions[] = new Permission($userPermission);
+         }
+
+        return new User(
+            rand(),
+            new PermissionList($permissions),
+        );
+    }
+
+    protected function getPoll(bool $active = true, string $title = 'title'): Poll
+    {
+        return new Poll(
+            rand(),
+            $active,
+            new Menu(
+                rand(),
+                $title,
+                new DishList([]),
+            )
+        );
+    }
+
+    protected function getPollList(): PollList
+    {
+        return new PollList([$this->getPoll()]);
+    }
+
+    protected function getDish(string $title = 'title', string $description = 'description'): Dish
+    {
+        return new Dish(
+            rand(),
+            $title,
+            $description
+        );
+    }
+
+    protected function getDishList(): DishList
+    {
+        return new DishList([$this->getDish()]);
+    }
+
+    protected function getMenu(string $title = 'title'): Menu
+    {
+        return new Menu(
+            rand(),
+            $title,
+            $this->getDishList()
+        );
+    }
+
+    protected function getPollResult(): PollResult
+    {
+        return new PollResult(
+            rand(),
+            $this->getPoll(),
+            $this->getEmployee(),
+            $this->getDish(),
+        );
+    }
+
+    protected function getPollResultDate(bool $valid): \DateTime
+    {
+        $timeString = $valid ? self::POLL_RESULT_VALID_DATE : self::POLL_RESULT_INVALID_DATE;
+
+        return \DateTime::createFromFormat(self::DATE_TIME_FORMAT, $timeString);
+    }
+}

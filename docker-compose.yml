@@ -12,5 +12,5 @@ services:
     environment:
       XDEBUG_CONFIG: "client_host=${XDEBUG_CONFIG_REMOTE_HOST:-host.docker.internal}"
       PHP_IDE_CONFIG: "serverName=${PHP_IDE_CONFIG_SERVER_NAME}"
-      XDEBUG_MODE: "debug"
+      XDEBUG_MODE: "${XDEBUG_MODE}"
       XDEBUG_SESSION: "PHPSTORM"

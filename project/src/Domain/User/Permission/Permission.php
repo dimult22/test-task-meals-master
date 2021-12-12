@@ -10,4 +10,5 @@ class Permission extends Enum
 {
     public const VIEW_ACTIVE_POLLS = 'viewActivePolls'; // возможность видеть активные опросы
     public const PARTICIPATION_IN_POLLS = 'participationInPolls'; // возможность участвовать в опросах
+    public const VIEW_POOL_RESULT = 'viewPollResult'; // возможность видеть выбор блюда
 }

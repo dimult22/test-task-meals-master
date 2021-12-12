@@ -17,6 +17,7 @@ RUN pecl install \
 RUN docker-php-ext-enable \
     xdebug
 
+COPY ./app_php.ini /usr/local/etc/php/conf.d/app_php.ini
 COPY ./fpm_pool.conf /usr/local/etc/php-fpm.d/app.conf
 
 RUN curl -sS https://getcomposer.org/installer | \

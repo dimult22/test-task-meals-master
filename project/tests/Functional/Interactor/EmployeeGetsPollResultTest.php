@@ -6,7 +6,6 @@ namespace tests\Meals\Functional\Interactor;
 
 use Meals\Application\Component\Validator\Exception\AccessDeniedException;
 use Meals\Application\Component\Validator\Exception\PollResultNotAllowedDateException;
-use Meals\Application\Component\Validator\PollResultAllowedAtDateValidator;
 use Meals\Application\Feature\PollResult\UseCase\EmployeeGetsPollResult\Interactor;
 use Meals\Domain\Employee\Employee;
 use Meals\Domain\Poll\PollResult;

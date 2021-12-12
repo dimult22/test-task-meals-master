@@ -29,7 +29,11 @@ class PollResultAllowedAtDateValidatorTest extends TestCase
     public function validationTestProvider(): array
     {
         return [
-            'tooEarly' => [
+            'tooEarly1' => [
+                '12-Dec-2021 07:00:00',
+                false
+            ],
+            'tooEarly2' => [
                 '13-Dec-2021 05:59:59',
                 false
             ],
@@ -45,8 +49,12 @@ class PollResultAllowedAtDateValidatorTest extends TestCase
                 '13-Dec-2021 22:00:00',
                 true
             ],
-            'tooLate' => [
+            'tooLate1' => [
                 '13-Dec-2021 22:00:01',
+                false
+            ],
+            'tooLate2' => [
+                '14-Dec-2021 21:00:00',
                 false
             ],
         ];

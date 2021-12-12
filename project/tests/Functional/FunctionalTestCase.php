@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace tests\Meals\Functional;
 
-use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use tests\Meals\AbstractTestCase;
 
-class FunctionalTestCase extends TestCase
+abstract class FunctionalTestCase extends AbstractTestCase
 {
     private static ContainerBuilder $container;
 

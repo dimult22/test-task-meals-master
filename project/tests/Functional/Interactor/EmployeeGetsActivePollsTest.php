@@ -6,14 +6,9 @@ namespace tests\Meals\Functional\Interactor;
 
 use Meals\Application\Component\Validator\Exception\AccessDeniedException;
 use Meals\Application\Feature\Poll\UseCase\EmployeeGetsActivePolls\Interactor;
-use Meals\Domain\Dish\DishList;
 use Meals\Domain\Employee\Employee;
-use Meals\Domain\Menu\Menu;
-use Meals\Domain\Poll\Poll;
 use Meals\Domain\Poll\PollList;
 use Meals\Domain\User\Permission\Permission;
-use Meals\Domain\User\Permission\PermissionList;
-use Meals\Domain\User\User;
 use tests\Meals\Functional\Fake\Provider\FakeEmployeeProvider;
 use tests\Meals\Functional\Fake\Provider\FakePollProvider;
 use tests\Meals\Functional\FunctionalTestCase;
@@ -22,7 +17,8 @@ class EmployeeGetsActivePollsTest extends FunctionalTestCase
 {
     public function testSuccessful()
     {
-        $poll = $this->performTestMethod($this->getEmployeeWithPermissions(), $this->getPollList());
+        $employee = $this->getEmployee(1, [Permission::VIEW_ACTIVE_POLLS]);
+        $poll = $this->performTestMethod($employee, $this->getPollList());
         verify($poll)->equals($poll);
     }
 
@@ -30,7 +26,8 @@ class EmployeeGetsActivePollsTest extends FunctionalTestCase
     {
         $this->expectException(AccessDeniedException::class);
 
-        $poll = $this->performTestMethod($this->getEmployeeWithNoPermissions(), $this->getPollList());
+        $employee = $this->getEmployee();
+        $poll = $this->performTestMethod($employee, $this->getPollList());
         verify($poll)->equals($poll);
     }
 
@@ -40,63 +37,5 @@ class EmployeeGetsActivePollsTest extends FunctionalTestCase
         $this->getContainer()->get(FakePollProvider::class)->setPolls($pollList);
 
         return $this->getContainer()->get(Interactor::class)->getActivePolls($employee->getId());
-    }
-
-    private function getEmployeeWithPermissions(): Employee
-    {
-        return new Employee(
-            1,
-            $this->getUserWithPermissions(),
-            4,
-            'Surname'
-        );
-    }
-
-    private function getUserWithPermissions(): User
-    {
-        return new User(
-            1,
-            new PermissionList(
-                [
-                    new Permission(Permission::VIEW_ACTIVE_POLLS),
-                ]
-            ),
-        );
-    }
-
-    private function getEmployeeWithNoPermissions(): Employee
-    {
-        return new Employee(
-            1,
-            $this->getUserWithNoPermissions(),
-            4,
-            'Surname'
-        );
-    }
-
-    private function getUserWithNoPermissions(): User
-    {
-        return new User(
-            1,
-            new PermissionList([]),
-        );
-    }
-
-    private function getPollList(): PollList
-    {
-        return new PollList([$this->getPoll()]);
-    }
-
-    private function getPoll(): Poll
-    {
-        return new Poll(
-            1,
-            true,
-            new Menu(
-                1,
-                'title',
-                new DishList([]),
-            )
-        );
     }
 }

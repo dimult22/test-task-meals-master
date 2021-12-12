@@ -16,7 +16,7 @@ class UserHasAccessToViewPollsValidatorTest extends TestCase
 {
     use ProphecyTrait;
 
-    public function testSuccessful()
+    public function testSuccessful(): void
     {
         $permissionList = $this->prophesize(PermissionList::class);
         $permissionList->hasPermission(Permission::VIEW_ACTIVE_POLLS)->willReturn(true);
@@ -28,7 +28,7 @@ class UserHasAccessToViewPollsValidatorTest extends TestCase
         verify($validator->validate($user->reveal()))->null();
     }
 
-    public function testFail()
+    public function testFail(): void
     {
         $this->expectException(AccessDeniedException::class);
 

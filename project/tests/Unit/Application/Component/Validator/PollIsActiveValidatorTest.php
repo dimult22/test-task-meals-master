@@ -14,7 +14,7 @@ class PollIsActiveValidatorTest extends AbstractTestCase
 {
     use ProphecyTrait;
 
-    public function testSuccessful()
+    public function testSuccessful(): void
     {
         $poll = $this->prophesize(Poll::class);
         $poll->isActive()->willReturn(true);
@@ -23,7 +23,7 @@ class PollIsActiveValidatorTest extends AbstractTestCase
         verify($validator->validate($poll->reveal()))->null();
     }
 
-    public function testFail()
+    public function testFail(): void
     {
         $this->expectException(PollIsNotActiveException::class);
 

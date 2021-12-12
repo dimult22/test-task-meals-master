@@ -20,7 +20,7 @@ class EmployeeGetsPollResultTest extends FunctionalTestCase
 {
     use ProphecyTrait;
 
-    public function testSuccessful()
+    public function testSuccessful(): void
     {
         $employee = $this->getEmployee(1, [Permission::VIEW_POOL_RESULT]);
         $pollResult = $this->performTestMethod($employee, $this->getPollResult(), true);
@@ -28,7 +28,7 @@ class EmployeeGetsPollResultTest extends FunctionalTestCase
         verify($pollResult)->equals($pollResult);
     }
 
-    public function testUserHasNotPermissions()
+    public function testUserHasNotPermissions(): void
     {
         $this->expectException(AccessDeniedException::class);
 
@@ -37,7 +37,7 @@ class EmployeeGetsPollResultTest extends FunctionalTestCase
         verify($pollResult)->equals($pollResult);
     }
 
-    public function testNotAllowedDate()
+    public function testNotAllowedDate(): void
     {
         $this->expectException(PollResultNotAllowedDateException::class);
 

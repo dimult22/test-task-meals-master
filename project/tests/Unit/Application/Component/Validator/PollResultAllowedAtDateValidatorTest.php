@@ -7,18 +7,13 @@ namespace tests\Meals\Unit\Application\Component\Validator;
 use Meals\Application\Component\Validator\Exception\PollResultNotAllowedDateException;
 use Meals\Application\Component\Validator\PollResultAllowedAtDateValidator;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 
 class PollResultAllowedAtDateValidatorTest extends TestCase
 {
-    use ProphecyTrait;
-
     private const DATE_TIME_FORMAT = 'j-M-Y H:i:s';
-    private const VALID_DATE = '13-Dec-2021 12:00:00';
-    private const INVALID_DATE = '15-Dec-2021 12:00:00';
 
     /** @dataProvider validationTestProvider */
-    public function testValidation(string $dateString, bool $valid)
+    public function testValidation(string $dateString, bool $valid): void
     {
         $date = \DateTime::createFromFormat(self::DATE_TIME_FORMAT, $dateString);
         $validator = new PollResultAllowedAtDateValidator();

@@ -16,14 +16,14 @@ use tests\Meals\Functional\FunctionalTestCase;
 
 class EmployeeGetsActivePollTest extends FunctionalTestCase
 {
-    public function testSuccessful()
+    public function testSuccessful(): void
     {
         $employee = $this->getEmployee(1, [Permission::VIEW_ACTIVE_POLLS]);
         $poll = $this->performTestMethod($employee, $this->getPoll(true));
         verify($poll)->equals($poll);
     }
 
-    public function testUserHasNotPermissions()
+    public function testUserHasNotPermissions(): void
     {
         $this->expectException(AccessDeniedException::class);
 
@@ -32,7 +32,7 @@ class EmployeeGetsActivePollTest extends FunctionalTestCase
         verify($poll)->equals($poll);
     }
 
-    public function testPollIsNotActive()
+    public function testPollIsNotActive(): void
     {
         $this->expectException(PollIsNotActiveException::class);
 
